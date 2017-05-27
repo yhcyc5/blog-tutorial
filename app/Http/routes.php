@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Routing\Route;
 /*
 |--------------------------------------------------------------------------
 | Application Routes

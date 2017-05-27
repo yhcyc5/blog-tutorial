@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use View;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+//use Illuminate\Support\Facades\View;
 use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -18,9 +20,9 @@ class HomeController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return View::make('home')
-            ->with('title', 'My Blog')
-            ->with('posts', $posts);
+        return view('home',
+            ['title' => 'My Blog',
+                'posts' => $posts]);
     }
 
     /**
@@ -30,7 +32,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('create', ['title' => '新增文章']);
     }
 
     /**
@@ -41,8 +43,11 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        $input = Input::all();
-        return $input['title'];
+        $post = new Post;
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->save();
+        return Redirect('post');
     }
 
     /**
@@ -53,9 +58,10 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-        return View::make('home')
-            ->with('title', '首頁')
-            ->with('hello', '大家好～～'.$id);
+        $post = Post::find($id);
+        return view('show',
+                    ['title' => 'My Blog - '. $post->title, 'post' => $post]);
+
     }
 
     /**
@@ -66,7 +72,11 @@ class HomeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return View::make('edit')
+            ->with('title', '編輯文章')
+            ->with('post', $post);
+
     }
 
     /**
@@ -78,7 +88,12 @@ class HomeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = Input::all();
+        $post = Post::find($id);
+        $post->title = $input['title'];
+        $post->content = $input['content'];
+        $post->save();
+        return Redirect::to('post');
     }
 
     /**
