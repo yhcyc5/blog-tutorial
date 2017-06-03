@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-//use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\View;
 use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -104,6 +104,8 @@ class HomeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return Redirect::to('post');
     }
 }
