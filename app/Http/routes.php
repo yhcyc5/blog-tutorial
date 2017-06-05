@@ -1,5 +1,6 @@
 <?php
-
+//use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -11,6 +12,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index'); // My Blog
+Route::get('post', 'HomeController@index'); // My Blog
+
+Route::get('post/create', 'HomeController@create'); // Create Post
+Route::post('post', 'HomeController@store');
+Route::get('post/{id}', 'HomeController@show'); // Update Post
+Route::get('post/{id}/edit', 'HomeController@edit');
+Route::put('post/{id}', 'HomeController@update');
+Route::delete('post/{id}', 'HomeController@destroy'); //Delete

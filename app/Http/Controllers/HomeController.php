@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use View;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -30,7 +32,8 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('create')
+            ->with('title', '新增文章');
     }
 
     /**
@@ -41,8 +44,11 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        $input = Input::all();
-        return $input['title'];
+        $post = new Post;
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->save();
+        return Redirect::to('post');
     }
 
     /**
@@ -53,9 +59,10 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-        return View::make('home')
-            ->with('title', '首頁')
-            ->with('hello', '大家好～～'.$id);
+        $post = Post::find($id);
+        return View::make('show')
+            ->with('title', 'My Blog - '. $post->title)
+            ->with('post', $post);
     }
 
     /**
@@ -66,7 +73,10 @@ class HomeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return View::make('edit')
+            ->with('title', '編輯文章')
+            ->with('post', $post);
     }
 
     /**
@@ -78,7 +88,12 @@ class HomeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = Input::all();
+        $post = Post::find($id);
+        $post->title = $input['title'];
+        $post->content = $input['content'];
+        $post->save();
+        return Redirect::to('post');
     }
 
     /**
@@ -89,6 +104,8 @@ class HomeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return Redirect::to('post');
     }
 }
