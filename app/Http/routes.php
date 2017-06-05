@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index'); // My Blog
 Route::get('post', 'HomeController@index'); // My Blog
+
 Route::get('post/create', 'HomeController@create'); // Create Post
 Route::post('post', 'HomeController@store');
 Route::get('post/{id}', 'HomeController@show'); // Update Post

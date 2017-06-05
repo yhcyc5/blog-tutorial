@@ -20,9 +20,9 @@ class HomeController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('home',
-            ['title' => 'My Blog',
-                'posts' => $posts]);
+        return View::make('home')
+            ->with('title', 'My Blog')
+            ->with('posts', $posts);
     }
 
     /**
@@ -32,7 +32,8 @@ class HomeController extends Controller
      */
     public function create()
     {
-        return view('create', ['title' => '新增文章']);
+        return View::make('create')
+            ->with('title', '新增文章');
     }
 
     /**
@@ -47,7 +48,7 @@ class HomeController extends Controller
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->save();
-        return Redirect('post');
+        return Redirect::to('post');
     }
 
     /**
@@ -59,9 +60,9 @@ class HomeController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        return view('show',
-                    ['title' => 'My Blog - '. $post->title, 'post' => $post]);
-
+        return View::make('show')
+            ->with('title', 'My Blog - '. $post->title)
+            ->with('post', $post);
     }
 
     /**
@@ -76,7 +77,6 @@ class HomeController extends Controller
         return View::make('edit')
             ->with('title', '編輯文章')
             ->with('post', $post);
-
     }
 
     /**
