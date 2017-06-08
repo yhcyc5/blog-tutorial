@@ -12,12 +12,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index'); // My Blog
-Route::get('post', 'HomeController@index'); // My Blog
 
-Route::get('post/create', 'HomeController@create'); // Create Post
-Route::post('post', 'HomeController@store');
-Route::get('post/{id}', 'HomeController@show'); // Update Post
-Route::get('post/{id}/edit', 'HomeController@edit');
-Route::put('post/{id}', 'HomeController@update');
-Route::delete('post/{id}', 'HomeController@destroy'); //Delete
+
+// 認證路由...
+get('auth/login', 'AuthController@getLogin')->name('login');
+post('auth/login', 'AuthController@postLogin');
+get('auth/logout', 'AuthController@getLogout')->name('logout');
+
+// 註冊路由...
+get('auth/register', 'AuthController@getRegister')->name('register');
+post('auth/register', 'AuthController@postRegister');
+get('auth/user-confirm', 'AuthController@getUserConfirm')->name('userConfirm');
+
+Route::group(['middleware' => 'auth'], function () {
+    get('/', 'HomeController@index');
+    get('post', 'HomeController@index')->name('post');
+    get('post/create', 'HomeController@create');
+    post('post', 'HomeController@store');
+    get('post/{id}', 'HomeController@show');
+    get('post/{id}/edit', 'HomeController@edit');
+    put('post/{id}', 'HomeController@update');
+    delete('post/{id}', 'HomeController@destroy');
+
+    get('password/reset_password', 'PasswordController@getResetPassword')->name('resetPassword');
+    post('password/reset_password', 'PasswordController@postResetPassword');
+});
+
+get('password/forgot_password', 'PasswordController@getForgotPassword')->name('forgotPassword');
+post('password/forgot_password', 'PasswordController@postForgotPassword');
+
