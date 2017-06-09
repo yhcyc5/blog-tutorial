@@ -24,19 +24,22 @@ get('auth/register', 'AuthController@getRegister')->name('register');
 post('auth/register', 'AuthController@postRegister');
 get('auth/user-confirm', 'AuthController@getUserConfirm')->name('userConfirm');
 
+
+get('/', 'HomeController@index')->name('home');
+get('blog', 'HomeController@index_single')->name('blog');
+
 Route::group(['middleware' => 'auth'], function () {
-    get('/', 'HomeController@index');
-    get('post', 'HomeController@index')->name('post');
-    get('post/create', 'HomeController@create');
-    post('post', 'HomeController@store');
-    get('post/{id}', 'HomeController@show');
-    get('post/{id}/edit', 'HomeController@edit');
-    put('post/{id}', 'HomeController@update');
-    delete('post/{id}', 'HomeController@destroy');
+    get('blog/create', 'HomeController@create')->name('create');
+    post('blog', 'HomeController@store');
+    get('blog/{id}/edit', 'HomeController@edit');
+    put('blog/{id}', 'HomeController@update');
+    delete('blog/{id}', 'HomeController@destroy');
 
     get('password/reset_password', 'PasswordController@getResetPassword')->name('resetPassword');
     post('password/reset_password', 'PasswordController@postResetPassword');
 });
+
+get('blog/{id}', 'HomeController@show')->name('show');
 
 get('password/forgot_password', 'PasswordController@getForgotPassword')->name('forgotPassword');
 post('password/forgot_password', 'PasswordController@postForgotPassword');
