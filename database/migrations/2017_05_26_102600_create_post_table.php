@@ -16,10 +16,11 @@ class CreatePostTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('content');
+            $table->integer('creator_id')->unsigned();
             $table->timestamps();
         });
-    }
 
+    }
     /**
      * Reverse the migrations.
      *

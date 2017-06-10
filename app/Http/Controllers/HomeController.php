@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use App\Post;
+use App\User;
+use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -20,35 +22,23 @@ class HomeController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return View::make('home')
-            ->with('title', 'My Blog')
+        return View::make('frontend/home')
+            ->with('title', 'Hello Blog')
             ->with('posts', $posts);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index_single()
     {
-        return View::make('create')
-            ->with('title', '新增文章');
-    }
+        $request = Request::only(['id']);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $post = new Post;
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
-        $post->save();
-        return Redirect::to('post');
+        // 個人首頁
+        $blog = User::where('id', $request['id'])->first();
+
+        //$posts = Post::all();
+        $posts = Post::where('creator_id', $blog->id)->get();
+        return View::make('frontend/blog', ['id', $blog->id])
+            ->with('blog', $blog)
+            ->with('posts', $posts);
     }
 
     /**
@@ -60,10 +50,44 @@ class HomeController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        return View::make('show')
-            ->with('title', 'My Blog - '. $post->title)
+        $blog = User::where('id', $post->creator_id)->first();
+        return View::make('frontend/show')
+            ->with('creator', $blog->name)
             ->with('post', $post);
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return View::make('frontend/create')
+            ->with('user', Auth::user())
+            ->with('title', '新增文章');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store()
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+        $input = Input::only(['title','content']);
+
+        $post = new Post;
+        $post->creator_id = $user->id;
+        $post->title = $input['title'];
+        $post->content = $input['content'];
+        $post->save();
+        return redirect(route('blog', ['id' => $user->id]));
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -74,7 +98,8 @@ class HomeController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return View::make('edit')
+        return View::make('frontend/edit')
+            ->with('user_name', Auth::user()->name)
             ->with('title', '編輯文章')
             ->with('post', $post);
     }
@@ -93,7 +118,7 @@ class HomeController extends Controller
         $post->title = $input['title'];
         $post->content = $input['content'];
         $post->save();
-        return Redirect::to('post');
+        return redirect(route('blog', ['id' => Auth::user()->id]));
     }
 
     /**
@@ -106,6 +131,6 @@ class HomeController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
-        return Redirect::to('post');
+        return redirect(route('blog', ['id' => Auth::user()->id]));
     }
 }

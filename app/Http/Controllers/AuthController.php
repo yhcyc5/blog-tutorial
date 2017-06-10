@@ -20,15 +20,26 @@ class AuthController extends Controller
     {
         $request = Request::only(['name', 'password']);
 
+        // 帳號是否啟用
+        $login = User::where('name', $request['name'])->first();
+        if ($login) {
+            if (!$login->status) {
+                return redirect(route('login'))->with(['MESSAGE' => '此帳號尚未郵件驗證']);
+            }
+        }
+
         // 驗證
         $status = Auth::attempt($request, true);
         //return view('test')->with(['test' => $status ]);
 
-        if ($status) {
-            return redirect(route('post'));
+        // 密碼錯誤
+        if (!$status) {
+            return redirect(route('login'))->with(['MESSAGE' => '帳號或密碼錯誤']);
         }
 
-        return redirect(route('login'))->with(['MESSAGE' => '郵箱或密碼錯誤']);
+        // 登入
+        $user = User::where('name', $request['name'])->first();
+        return redirect(route('blog', ['id' => $user->id]));
     }
 
     public function getLogout()
@@ -41,7 +52,7 @@ class AuthController extends Controller
             Auth::logout();
         }
 
-        return redirect('/');
+        return redirect(route('home'));
     }
 
     public function getRegister()
