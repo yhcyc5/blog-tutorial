@@ -30,13 +30,14 @@ class LoginController extends Controller
     {
         $request = Socialite::driver('facebook')->user();
 
-        if (User::where('name' , $request->getName())->first() == null) {
+        if (User::where('facebook' , $request->getId())->first() == null) {
             User::create([
                 'name' => $request->getName(),
-                'email'    => $request->getEmail()
+                'email'    => $request->getEmail(),
+                'facebook' => $request->getId()
             ]);
         }
-        $user = User::where('name' , $request->getName())->first();
+        $user = User::where('facebook' , $request->getId())->first();
 
         Auth::loginUsingId($user->id, true);
 
