@@ -34,7 +34,8 @@ class LoginController extends Controller
             User::create([
                 'name' => $request->getName(),
                 'email'    => $request->getEmail(),
-                'facebook' => $request->getId()
+                'facebook' => $request->getId(),
+                'status' => true
             ]);
         }
         $user = User::where('facebook' , $request->getId())->first();
