@@ -19,6 +19,9 @@ get('auth/login', 'AuthController@getLogin')->name('login');
 post('auth/login', 'AuthController@postLogin');
 get('auth/logout', 'AuthController@getLogout')->name('logout');
 
+get('login/facebook', 'Auth\LoginController@redirectToProvider')->name('login-facebook');
+get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+
 // 註冊路由...
 get('auth/register', 'AuthController@getRegister')->name('register');
 post('auth/register', 'AuthController@postRegister');
@@ -43,4 +46,5 @@ get('blog/{id}', 'HomeController@show')->name('show');
 
 get('password/forgot_password', 'PasswordController@getForgotPassword')->name('forgotPassword');
 post('password/forgot_password', 'PasswordController@postForgotPassword');
+
 

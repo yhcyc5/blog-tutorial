@@ -9,6 +9,8 @@ use App\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
 
+use Socialite;
+
 class AuthController extends Controller
 {
     public function getLogin()
@@ -114,5 +116,6 @@ class AuthController extends Controller
         }
         return abort(404);
     }
+
 
 }
