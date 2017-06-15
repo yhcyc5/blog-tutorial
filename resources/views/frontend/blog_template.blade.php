@@ -6,7 +6,7 @@
 @stop
 
 @section('header')
-
+    {{ $blog->name }} 's Blog
 @stop
 
 @section('body')

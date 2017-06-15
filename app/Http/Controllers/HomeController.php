@@ -32,12 +32,11 @@ class HomeController extends Controller
         $request = Request::only(['id']);
 
         // 個人首頁
-        $blog = User::where('id', $request['id'])->first();
+        $user = User::find($request['id']);
 
-        //$posts = Post::all();
-        $posts = Post::where('creator_id', $blog->id)->get();
-        return View::make('frontend/blog', ['id', $blog->id])
-            ->with('blog', $blog)
+        $posts = $user->post()->get();
+        return View::make('frontend/blog', ['id', $user->id])
+            ->with('blogger_name', $user->name)
             ->with('posts', $posts);
     }
 
@@ -50,9 +49,8 @@ class HomeController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        $blog = User::where('id', $post->creator_id)->first();
         return View::make('frontend/show')
-            ->with('creator', $blog->name)
+            ->with('author', $post->user->name)
             ->with('post', $post);
     }
 
@@ -64,7 +62,6 @@ class HomeController extends Controller
     public function create()
     {
         return View::make('frontend/create')
-            ->with('user', Auth::user())
             ->with('title', '新增文章');
     }
 
@@ -76,11 +73,11 @@ class HomeController extends Controller
      */
     public function store()
     {
-        $user = User::where('id', Auth::user()->id)->first();
+        $user = User::find(Auth::user()->id);
         $input = Input::only(['title','content']);
 
         $post = new Post;
-        $post->creator_id = $user->id;
+        $post->author = $user->id;
         $post->title = $input['title'];
         $post->content = $input['content'];
         $post->save();

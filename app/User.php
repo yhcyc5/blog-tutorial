@@ -37,4 +37,13 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
+    public static function findUserByEmail($email)
+    {
+        return User::where('email', $email)->first();
+    }
+
+    public function post()
+    {
+        return $this->hasMany('App\Post','author','id');
+    }
 }

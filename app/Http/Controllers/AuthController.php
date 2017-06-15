@@ -15,7 +15,8 @@ class AuthController extends Controller
 {
     public function getLogin()
     {
-        return view('auth/login');
+        return view('auth/login')
+            ->with('title', '登入');
     }
 
     public function postLogin()
@@ -59,7 +60,8 @@ class AuthController extends Controller
 
     public function getRegister()
     {
-        return view('auth/register');
+        return view('auth/register')
+            ->with('title', '註冊');
     }
 
     public function postRegister()

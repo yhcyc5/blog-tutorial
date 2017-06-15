@@ -6,7 +6,7 @@
 @stop
 
 @section('header')
-
+    {{ $title }}
 @stop
 
 @section('body')

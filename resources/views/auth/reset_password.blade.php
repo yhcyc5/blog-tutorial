@@ -1,19 +1,35 @@
+@extends('frontend.template')
 
-<form method="POST" action="/password/reset_password">
-    {!! csrf_field() !!}
 
-    <div>
-        信箱
-        <input type="email" name="email" value="{{ old('email') }}">
-    </div>
-    <div>
-        新密碼
-        <input type="password" name="new_password">
-    </div>
+@section('title')
+    {{ $title }}
+@stop
 
-    <div>
-        <button type="submit">
-            更改密碼
-        </button>
-    </div>
-</form>
+@section('header')
+    {{ $title }}
+@stop
+
+@section('body')
+    <form method="POST" action="/password/reset_password">
+        {!! csrf_field() !!}
+
+        @if (Session::has('MESSAGE'))
+            <span style="color:red;">{{ Session::get('MESSAGE') }}</span>
+        @endif
+
+        <div>
+            信箱
+            <input type="email" name="email" value="{{ old('email') }}">
+        </div>
+        <div>
+            新密碼
+            <input type="password" name="new_password">
+        </div>
+
+        <div>
+            <button type="submit">
+                更改密碼
+            </button>
+        </div>
+    </form>
+@stop
