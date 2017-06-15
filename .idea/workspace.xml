@@ -121,7 +121,7 @@
             <entry file="file://$PROJECT_DIR$/.gitignore">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="90">
-                  <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+                  <caret line="6" column="1" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
                   <folding />
                 </state>
               </provider>
@@ -430,7 +430,7 @@
       <workItem from="1497342950590" duration="5419000" />
       <workItem from="1497374396564" duration="87000" />
       <workItem from="1497413595298" duration="10062000" />
-      <workItem from="1497512352590" duration="11239000" />
+      <workItem from="1497512352590" duration="11499000" />
     </task>
     <task id="LOCAL-00001" summary="補傳缺少當案">
       <created>1495914487857</created>
@@ -495,11 +495,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497532995111</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="git中不紀錄.idea">
+      <created>1497541579085</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1497541579085</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156203000" />
+    <option name="totallyTimeSpent" value="156463000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -514,7 +521,7 @@
     <frame x="1366" y="0" width="1366" height="764" extended-state="6" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22734138" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22734138" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32808024" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871014" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -576,7 +583,8 @@
     <MESSAGE value="完成 FB社群登入" />
     <MESSAGE value="修正 FB註冊後會員狀態應為啟用" />
     <MESSAGE value="加上 資料表關聯 users &amp; posts&#10;登入頁增加上方選單" />
-    <option name="LAST_COMMIT_MESSAGE" value="加上 資料表關聯 users &amp; posts&#10;登入頁增加上方選單" />
+    <MESSAGE value="git中不紀錄.idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="git中不紀錄.idea" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -947,7 +955,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <caret line="6" column="1" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
           <folding />
         </state>
       </provider>
