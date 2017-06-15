@@ -1,4 +1,15 @@
+@extends('frontend.template')
 
+
+@section('title')
+    {{ $title }}
+@stop
+
+@section('header')
+    {{ $title }}
+@stop
+
+@section('body')
 <form method="POST" action="/password/forgot_password">
     {!! csrf_field() !!}
 
@@ -9,7 +20,9 @@
             @endforeach
         </ul>
     @endif
-
+    @if (Session::has('MESSAGE'))
+        <span style="color:red;">{{ Session::get('MESSAGE') }}</span>
+    @endif
     <div>
         Email
         <input type="email" name="email" value="{{ old('email') }}">
@@ -21,3 +34,4 @@
         </button>
     </div>
 </form>
+@stop

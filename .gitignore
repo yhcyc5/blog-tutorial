@@ -3,5 +3,5 @@
 Homestead.yaml
 Homestead.json
 .env
-resources/views/test.blade.php
+/resources/views/test.blade.php
 .idea

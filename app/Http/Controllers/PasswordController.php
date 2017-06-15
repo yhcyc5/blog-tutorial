@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Request;
 use App\User;
 use Illuminate\Support\Facades\Mail;
+use Auth;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -14,12 +15,19 @@ class PasswordController extends Controller
 {
     public function getForgotPassword ()
     {
-        return view('auth/forgot_password');
+        return view('auth/forgot_password')
+            ->with('title', '忘記密碼');
     }
 
     public function postForgotPassword ()
     {
         $request = Request::Only('email');
+
+        if ($request['email'] == null) {
+            return redirect(route('forgotPassword'))
+                ->with(['MESSAGE' => '請輸入Email']);
+        }
+
         $user = User::where('email', $request['email'])->first();
 
         $new_password = str_random(8);
@@ -32,7 +40,7 @@ class PasswordController extends Controller
         });
 
 
-        if($user) {
+        if ($user) {
             $data = [
                 'password' => bcrypt($new_password)
             ];
@@ -44,19 +52,25 @@ class PasswordController extends Controller
 
     public function getResetPassword ()
     {
-        return view('auth/reset_password');
+        return view('auth/reset_password')
+            ->with('title', '更改密碼');
     }
 
     public function postResetPassword ()
     {
-        $request = Request::Only('email','new_password');
-        $user = User::where('email', $request['email'])->first();
-        if($user) {
-            $data = [
-                'password' => bcrypt($request['new_password'])
-            ];
-            $user->update($data);
+        $request = Request::Only('email', 'new_password');
+
+        if (Auth::user()->email != $request['email']) {
+            return redirect(route('resetPassword'))
+                ->with(['MESSAGE' => 'Email輸入錯誤！']);
         }
+
+        $user = User::find(Auth::user()->id);
+        $data = [
+            'password' => bcrypt($request['new_password'])
+        ];
+        $user->update($data);
+
 
         return redirect(route('login'))->with(['MESSAGE' => '密碼已更新，請使用新密碼登入']);
     }

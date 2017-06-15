@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->boolean('status')->default(false);
             $table->string('confirmed_code', 40)->nullable();
-            $table->string('facebook')->nullable();
+            $table->string('facebook')->nullable()->index();
             $table->rememberToken();
             $table->timestamps();
         });

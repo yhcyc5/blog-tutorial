@@ -2,7 +2,7 @@
 
 
 @section('body')
-    @if (Auth::check() && $blog->name == Auth::user()->name)
+    @if (Auth::check() && $blogger_name == Auth::user()->name)
         <div>
             <button>{!! link_to('blog/create', '新增文章') !!}</button>
         </div>
@@ -11,7 +11,7 @@
         <ol>
             @foreach ($posts as $post)
                 <li>{!! link_to('blog/'.$post->id, $post->title) !!}
-                @if (Auth::check() && $blog->name == Auth::user()->name)
+                @if (Auth::check() && $blogger_name == Auth::user()->name)
                     <button>
                         {!! link_to('blog/'.$post->id.'/edit', '編輯') !!}
                     </button>
