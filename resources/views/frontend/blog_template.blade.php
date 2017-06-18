@@ -2,11 +2,11 @@
 
 
 @section('title')
-    {{ $blog->name }} 's Blog
+    {{ $blogger_name }} 's Blog
 @stop
 
 @section('header')
-    {{ $blog->name }} 's Blog
+    {{ $blogger_name }} 's Blog
 @stop
 
 @section('body')

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Request;
+use Validator;
+use Socialite;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
 
-use Socialite;
 
 class AuthController extends Controller
 {
@@ -64,24 +66,28 @@ class AuthController extends Controller
             ->with('title', '註冊');
     }
 
-    public function postRegister()
+    public function postRegister(RegisterRequest $request)
     {
-        $input = Input::all();
+        /*
+        $validator = Validator::make($input, [
+            'name' => 'required|unique:users|min:3',
+            'email' => 'required|unique:users',
+            'password' => 'required|min:6',
+        ]);
 
-        // 重複?
-        $new = User::where('name', $input['name'])->first();
-        if($new) {
-            return redirect(route('login'))->with(['MESSAGE' => '此帳號已被註冊']);
+        if ($validator->fails()) {
+            return redirect(route('register'))
+                ->withErrors($validator, 'register')
+                ->withInput();
         }
-        $new = User::where('email', $input['email'])->first();
-        if($new) {
-            return redirect(route('login'))->with(['MESSAGE' => '此信箱已存在帳號']);
-        }
+        */
+
 
         $user = new User;
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->password = $input['password'];
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+        $user->password = $request['password'];
+        $user->password_verify = $request['password_verify'];
         $user->confirmed_code = str_random(40);
 
 

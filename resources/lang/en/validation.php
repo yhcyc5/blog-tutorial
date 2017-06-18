@@ -92,6 +92,14 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+/*
+        'title' => [
+            'required' => '標題是必填的',
+        ],
+        'content' => [
+            'required'  => '內容是必填的',
+        ],
+*/
     ],
 
     /*

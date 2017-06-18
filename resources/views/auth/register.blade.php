@@ -12,7 +12,15 @@
 @section('body')
     <form method="POST" action="/auth/register">
         {!! csrf_field() !!}
-
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div>
             帳號
             <input type="text" name="name" value="{{ old('name') }}">
@@ -26,6 +34,11 @@
         <div>
             密碼
             <input type="password" name="password">
+        </div>
+
+        <div>
+            確認密碼
+            <input type="password" name="password_verify">
         </div>
 
         <div>

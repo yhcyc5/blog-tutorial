@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Request;
+use Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -10,7 +12,10 @@ use App\Post;
 use App\User;
 use Auth;
 use App\Http\Requests;
+use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Controllers\Controller;
+
+
 
 class HomeController extends Controller
 {
@@ -71,8 +76,22 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(StoreBlogPostRequest $request)
     {
+        /* 自定義 $validator
+
+        $validator = Validator::make($request, [
+            'title' => 'required|unique:posts|max:3',
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('create'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+        */
+
         $user = User::find(Auth::user()->id);
         $input = Input::only(['title','content']);
 
