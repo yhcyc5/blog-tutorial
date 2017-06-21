@@ -7,15 +7,15 @@
 
 
 <body>
-    <p>Hi {{ $user->name}} 您好：
+    <p>Hi {{ $params->name }} 您好：
         <br/>
         <br/>
-        您好，請點選<a href="{{ route('userConfirm', ['name' => $user->name, 'token' => $user->confirmed_code]) }}" style="color: #178fac">這裡</a>啟動您的帳號。
+        您好，請點選<a href="{{ route('userConfirm', ['name' => $params->name, 'token' => $params->confirm_token]) }}" style="color: #178fac">這裡</a>啟動您的帳號。
         <br/>
         <br/>
         如果您無法點選以上連結，請直接複製以下網址
         <br/>
-    {{route('userConfirm', ['name' => $user->name, 'token' => $user->confirmed_code])}}
+    {{route('userConfirm', ['name' => $params->name, 'token' => $params->confirm_token])}}
 
 
 </body>

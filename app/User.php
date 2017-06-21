@@ -16,31 +16,18 @@ class User extends Model implements AuthenticatableContract,
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'users';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name', 'email', 'password', 'status', 'confirmed_code', 'facebook'];
+    protected $fillable = ['name', 'email', 'password', 'status', 'confirm_token', 'facebook'];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = ['password', 'remember_token'];
+
 
     public static function findUserByEmail($email)
     {
         return User::where('email', $email)->first();
     }
+
 
     public function post()
     {

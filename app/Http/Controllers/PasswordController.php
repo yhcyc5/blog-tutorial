@@ -6,6 +6,7 @@ use Request;
 use App\User;
 use Illuminate\Support\Facades\Mail;
 use Auth;
+use Zoe\Repositories\UserRepository;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,15 @@ use Illuminate\Routing\Route;
 
 class PasswordController extends Controller
 {
+
+    protected $userRepository = null;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+
     public function getForgotPassword ()
     {
         return view('auth/forgot_password')
@@ -28,9 +38,10 @@ class PasswordController extends Controller
                 ->with(['MESSAGE' => '請輸入Email']);
         }
 
-        $user = User::where('email', $request['email'])->first();
-
+        $user = $this->userRepository->getByEmail($request['email']);
         $new_password = str_random(8);
+
+        $user = $this->userRepository->passwordUpdate($user->id, $new_password);
 
         // send email
         Mail::send('emails.password', ['user' => $user, 'new_password' => $new_password], function ($message) use ($user) {
@@ -38,14 +49,6 @@ class PasswordController extends Controller
             $message->subject('新密碼');
             $message->to($user->email, $user->name);
         });
-
-
-        if ($user) {
-            $data = [
-                'password' => bcrypt($new_password)
-            ];
-            $user->update($data);
-        }
 
         return redirect(route('login'))->with(['MESSAGE' => '新密碼已寄至信箱，請使用新密碼登入']);
     }
@@ -65,12 +68,7 @@ class PasswordController extends Controller
                 ->with(['MESSAGE' => 'Email輸入錯誤！']);
         }
 
-        $user = User::find(Auth::user()->id);
-        $data = [
-            'password' => bcrypt($request['new_password'])
-        ];
-        $user->update($data);
-
+        $this->userRepository->passwordUpdate(Auth::user()->id, $request['new_password']);
 
         return redirect(route('login'))->with(['MESSAGE' => '密碼已更新，請使用新密碼登入']);
     }
