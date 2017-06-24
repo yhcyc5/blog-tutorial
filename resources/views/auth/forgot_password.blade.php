@@ -10,7 +10,7 @@
 @stop
 
 @section('body')
-<form method="POST" action="/password/forgot_password">
+<form method="POST" action="/auth/forgot_password">
     {!! csrf_field() !!}
 
     @if (count($errors) > 0)

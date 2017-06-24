@@ -10,7 +10,7 @@
 @stop
 
 @section('body')
-    <form method="POST" action="/password/reset_password">
+    <form method="POST" action="/auth/reset_password">
         {!! csrf_field() !!}
 
         @if (Session::has('MESSAGE'))

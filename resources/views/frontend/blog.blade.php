@@ -4,7 +4,7 @@
 @section('body')
     @if (Auth::check() && $blogger_name == Auth::user()->name)
         <div>
-            <button>{!! link_to('blog/create', '新增文章') !!}</button>
+            <button>{!! link_to(route('create-post'), '新增文章') !!}</button>
         </div>
     @endif
     @if (isset($posts))

@@ -27,7 +27,7 @@ class HomeController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function index()
+    public function home()
     {
         $posts = Post::all();
 
@@ -36,7 +36,7 @@ class HomeController extends Controller
             ->with('posts', $posts);
     }
 
-    public function index_single()
+    public function blog()
     {
         $request = Request::only(['id']);
         $user = $this->userRepository->getById($request['id']);

@@ -17,9 +17,16 @@ class UserRepository extends EloquentRepository
         return User::where('name', $user_name)->first();
     }
 
-    public function getByEmail($user_email)
+    public function getByEmail($email)
     {
-        return User::where('email', $user_email)->first();
+        $email = trim($email);
+        return $this->model->where('email', $email)->first();
+    }
+
+    public function getUserName($user_id)
+    {
+
+        return User::where('id', $user_id)->first()->only('name');
     }
 
     public function register($params)

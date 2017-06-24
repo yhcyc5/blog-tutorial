@@ -25,26 +25,26 @@ get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 // 註冊路由...
 get('auth/register', 'AuthController@getRegister')->name('register');
 post('auth/register', 'AuthController@postRegister');
-get('auth/user-confirm', 'AuthController@getUserConfirm')->name('userConfirm');
+get('auth/user-confirm', 'AuthController@getUserConfirm')->name('user-confirm');
 
 
-get('/', 'HomeController@index')->name('home');
-get('blog', 'HomeController@index_single')->name('blog');
+get('/', 'HomeController@home')->name('home');
+get('blog', 'HomeController@blog')->name('blog');
 
 Route::group(['middleware' => 'auth'], function () {
-    get('blog/create', 'HomeController@create')->name('create');
+    get('blog/create', 'HomeController@create')->name('create-post');
     post('blog', 'HomeController@store');
     get('blog/{id}/edit', 'HomeController@edit');
     put('blog/{id}', 'HomeController@update');
     delete('blog/{id}', 'HomeController@destroy');
 
-    get('password/reset_password', 'PasswordController@getResetPassword')->name('resetPassword');
-    post('password/reset_password', 'PasswordController@postResetPassword');
+    get('auth/reset_password', 'AuthController@getResetPassword')->name('reset-password');
+    post('auth/reset_password', 'AuthController@postResetPassword');
 });
 
-get('blog/{id}', 'HomeController@show')->name('show');
+get('blog/{id}', 'HomeController@show')->name('show-post');
 
-get('password/forgot_password', 'PasswordController@getForgotPassword')->name('forgotPassword');
-post('password/forgot_password', 'PasswordController@postForgotPassword');
+get('auth/forgot_password', 'AuthController@getForgotPassword')->name('forgot-password');
+post('auth/forgot_password', 'AuthController@postForgotPassword');
 
 
